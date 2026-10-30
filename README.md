@@ -144,5 +144,5 @@ Luồng xử lý: `gui` gọi `dao`, `dao` dùng `connect` để nói chuyện v
 ---
 ## 11 Tác giả / Nhóm phát triển
 
-  * [Huỳnh Khánh Huy] 
-* **Liên hệ**: [khanhhuyst0848@gmail.com] hoặc 0848143765
+  * Huỳnh Khánh Huy
+* **Liên hệ**: khanhhuyst0848@gmail.com hoặc 0848143765

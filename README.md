@@ -140,3 +140,9 @@ Luồng xử lý: `gui` gọi `dao`, `dao` dùng `connect` để nói chuyện v
 | Lỗi SSL/TLS khi kết nối | Đặt `db.encrypt=false` trong `config.properties`. |
 | Chữ tiếng Việt bị lỗi font trong code | IDE chưa đặt mã hóa UTF-8. |
 | Sai tên đăng nhập hoặc mật khẩu dù đúng | Chưa chạy `du_lieu_mau.sql`, hoặc đã đổi mật khẩu. |
+
+---
+## 11 Tác giả / Nhóm phát triển
+
+  * [Huỳnh Khánh Huy] 
+* **Liên hệ**: [khanhhuyst0848@gmail.com] hoặc 0848143765

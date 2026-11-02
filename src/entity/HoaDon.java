@@ -13,12 +13,12 @@ public class HoaDon {
     private double giamGia;
     private NhanVien nhanVien;
     private KhuyenMai khuyenMai;
+    private double tamTinh;
     private List<ChiTietHoaDon> dsChiTiet = new ArrayList<>();
 
-    public HoaDon() {
-    }
+    public HoaDon() {}
 
-    public HoaDon(String maHD, int soThuTu, LocalDateTime ngayLap, String trangThai, String phuongThucTT, double giamGia, NhanVien nhanVien, KhuyenMai khuyenMai) {
+    public HoaDon(String maHD, int soThuTu, LocalDateTime ngayLap, String trangThai, String phuongThucTT, double giamGia, NhanVien nhanVien, KhuyenMai khuyenMai, double tamTinh) {
         this.maHD = maHD;
         this.soThuTu = soThuTu;
         this.ngayLap = ngayLap;
@@ -27,79 +27,29 @@ public class HoaDon {
         this.giamGia = giamGia;
         this.nhanVien = nhanVien;
         this.khuyenMai = khuyenMai;
+        this.tamTinh = tamTinh;
     }
 
-    public String getMaHD() {
-        return maHD;
-    }
-
-    public void setMaHD(String maHD) {
-        this.maHD = maHD;
-    }
-
-    public int getSoThuTu() {
-        return soThuTu;
-    }
-
-    public void setSoThuTu(int soThuTu) {
-        this.soThuTu = soThuTu;
-    }
-
-    public LocalDateTime getNgayLap() {
-        return ngayLap;
-    }
-
-    public void setNgayLap(LocalDateTime ngayLap) {
-        this.ngayLap = ngayLap;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public String getPhuongThucTT() {
-        return phuongThucTT;
-    }
-
-    public void setPhuongThucTT(String phuongThucTT) {
-        this.phuongThucTT = phuongThucTT;
-    }
-
-    public double getGiamGia() {
-        return giamGia;
-    }
-
-    public void setGiamGia(double giamGia) {
-        this.giamGia = giamGia;
-    }
-
-    public NhanVien getNhanVien() {
-        return nhanVien;
-    }
-
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
-    }
-
-    public KhuyenMai getKhuyenMai() {
-        return khuyenMai;
-    }
-
-    public void setKhuyenMai(KhuyenMai khuyenMai) {
-        this.khuyenMai = khuyenMai;
-    }
-
-    public List<ChiTietHoaDon> getDsChiTiet() {
-        return dsChiTiet;
-    }
-
-    public void setDsChiTiet(List<ChiTietHoaDon> dsChiTiet) {
-        this.dsChiTiet = dsChiTiet;
-    }
+    public String getMaHD() { return maHD; }
+    public void setMaHD(String maHD) { this.maHD = maHD; }
+    public int getSoThuTu() { return soThuTu; }
+    public void setSoThuTu(int soThuTu) { this.soThuTu = soThuTu; }
+    public LocalDateTime getNgayLap() { return ngayLap; }
+    public void setNgayLap(LocalDateTime ngayLap) { this.ngayLap = ngayLap; }
+    public String getTrangThai() { return trangThai; }
+    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
+    public String getPhuongThucTT() { return phuongThucTT; }
+    public void setPhuongThucTT(String phuongThucTT) { this.phuongThucTT = phuongThucTT; }
+    public double getGiamGia() { return giamGia; }
+    public void setGiamGia(double giamGia) { this.giamGia = giamGia; }
+    public NhanVien getNhanVien() { return nhanVien; }
+    public void setNhanVien(NhanVien nhanVien) { this.nhanVien = nhanVien; }
+    public KhuyenMai getKhuyenMai() { return khuyenMai; }
+    public void setKhuyenMai(KhuyenMai khuyenMai) { this.khuyenMai = khuyenMai; }
+    public double getTamTinh() { return tamTinh; }
+    public void setTamTinh(double tamTinh) { this.tamTinh = tamTinh; }
+    public List<ChiTietHoaDon> getDsChiTiet() { return dsChiTiet; }
+    public void setDsChiTiet(List<ChiTietHoaDon> dsChiTiet) { this.dsChiTiet = dsChiTiet; }
 
     public static final String MOI_TAO = "MOI_TAO";
     public static final String DANG_PHA_CHE = "DANG_PHA_CHE";
@@ -128,41 +78,16 @@ public class HoaDon {
         return CHUYEN_KHOAN.equals(ma) ? "Chuyển khoản" : "Tiền mặt";
     }
 
-    /** Tạm tính lấy từ CSDL khi chỉ nạp danh sách hóa đơn mà chưa nạp chi tiết. */
-    private double tamTinhDB = -1;
-
-    public void setTamTinhDB(double v) {
-        this.tamTinhDB = v;
-    }
-
-    /** Tổng tiền các dòng (chưa trừ khuyến mãi). */
+    // Tổng tiền các dòng (chưa trừ khuyến mãi). Khi chưa nạp chi tiết thì dùng tạm tính lấy từ CSDL.
     public double tinhTamTinh() {
-        if (dsChiTiet.isEmpty() && tamTinhDB >= 0) return tamTinhDB;
+        if (dsChiTiet.isEmpty()) return tamTinh;
         double s = 0;
         for (ChiTietHoaDon ct : dsChiTiet) s += ct.tinhThanhTien();
         return s;
     }
 
-    /** Số tiền khách phải trả. */
+    // Số tiền khách phải trả
     public double tinhTongTien() {
         return Math.max(0, tinhTamTinh() - giamGia);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HoaDon other = (HoaDon) o;
-        return maHD != null && maHD.equals(other.maHD);
-    }
-
-    @Override
-    public int hashCode() {
-        return maHD == null ? 0 : maHD.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(maHD);
     }
 }
